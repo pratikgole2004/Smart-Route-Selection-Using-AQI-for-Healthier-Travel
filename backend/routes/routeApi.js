@@ -1,7 +1,7 @@
 const express = require('express');
 const fetch = require('node-fetch');
-const Route = require('../models/Route');  // Import Route model
-const City = require('../models/City');  // Import City model
+const Route = require('../models/Route');  // Importing Route model
+const City = require('../models/City');  // Importing City model
 
 // Function to fetch AQI data from OpenWeather API
 async function getAQI(lat, lon) {
