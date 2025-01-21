@@ -5,14 +5,14 @@ const City = require('../models/City');  // Importing City model
 
 // Function to fetch AQI data from OpenWeather API
 async function getAQI(lat, lon) {
-  const apiKey = process.env.OPENWEATHER_API_KEY;  // Get the API key from .env file
+  const apiKey = process.env.OPENWEATHER_API_KEY;  
   const url = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
   console.log(`Fetching AQI data for coordinates: lat=${lat}, lon=${lon}`);
   const response = await fetch(url);
   const data = await response.json();
   
-  const aqi = data.list[0].main.aqi;  // AQI value (1-5)
+  const aqi = data.list[0].main.aqi;  
   const components = data.list[0].components;  // AQI components like CO, NO2, PM2.5, etc.
   
   return { aqi, components };  // Return both AQI value and components
@@ -35,7 +35,6 @@ async function getCityCoordinates(cityName) {
   return { lat, lng };
 }
 
-// Add city to MongoDB if not already present
 async function addCity(cityName) {
   const existingCity = await City.findOne({ name: cityName });
   if (existingCity) {
@@ -62,7 +61,7 @@ async function calculatePath(sourceCity, destinationCity) {
   const distance = Math.sqrt(
     Math.pow(destinationCoordinates.lat - sourceCoordinates.lat, 2) +
     Math.pow(destinationCoordinates.lng - sourceCoordinates.lng, 2)
-  ) * 111;  // Approximate distance in km
+  ) * 111;  
 
   // Get AQI and components for source and destination
   const sourceAQIData = await getAQI(sourceCoordinates.lat, sourceCoordinates.lng);
